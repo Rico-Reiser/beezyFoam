@@ -1,0 +1,36 @@
+
+
+echo ">>> Cleaning case directory..."
+
+
+for d in [0-9]*; do
+    if [ -d "$d" ] && [ "$d" != "0_orig" ]; then
+        echo ">>> Removing directory: $d"
+        rm -rf "$d"
+    fi
+done
+
+
+rm -rf constant/polyMesh
+
+
+rm -rf processor*
+
+
+rm -rf postProcessing
+
+
+rm -f log.*
+
+
+rm -rf constant/extendedFeatureEdgeMesh
+
+
+if [ -d "0_orig" ]; then
+    echo ">>> Restoring original 0 directory from 0_orig"
+    rm -rf 0
+    cp -r 0_orig 0
+fi
+
+echo ">>> Clean complete."
+

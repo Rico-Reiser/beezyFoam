@@ -1,0 +1,10 @@
+
+
+if [ -d "0_orig" ]; then
+    echo ">>> Restoring original 0 directory from 0_orig"
+    rm -rf 0
+    cp -r 0_orig 0
+fi
+
+echo ">>> tiny clean complete"
+

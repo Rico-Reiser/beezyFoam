@@ -1,0 +1,21 @@
+
+cd "${0%/*}" || exit 1   
+
+source /opt/openfoam10/etc/bashrc
+
+
+./Allclean
+
+echo ">>> 1. blockMesh"
+blockMesh > log.blockMesh
+
+echo ">>> 3. snappyHexMesh -overwrite"
+snappyHexMesh -overwrite > log.snappyHexMesh
+
+echo ">>> 4. setFields"
+setFields > log.setFields
+
+echo ">>> 5. Starte summerFoam"
+interFoam > log.interFoam
+
+echo ">>> Simulation abgeschlossen!"

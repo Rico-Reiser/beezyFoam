@@ -1,0 +1,151 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+
+solvers
+{
+    // ===============================
+    // Phase fractions
+    // ===============================
+    "alpha.*"
+    {
+        nAlphaSubCycles 1;
+        cAlpha          0;
+    }
+
+    // ===============================
+    // Pressure
+    // ===============================
+    p_rgh
+    {
+        solver          GAMG;
+        tolerance       1e-7;
+        relTol          0.05;
+
+        smoother        GaussSeidel;
+
+        // smoother stability
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+    }
+
+    p_rghFinal
+    {
+        solver          GAMG;
+        tolerance       1e-8;
+        relTol          0;
+
+        smoother        GaussSeidel;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+    }
+
+
+    // ===============================
+    // Velocity
+    // ===============================
+    U
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-10;
+        relTol          0;
+        nSweeps         3;      // Mushy zone → more sweeps
+    }
+
+    UFinal
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+        nSweeps         3;
+    }
+
+    // ===============================
+    // Temperature
+    // ===============================
+    //T
+    //{
+    //    solver          smoothSolver;
+    //    smoother        GaussSeidel;
+    //    tolerance       1e-8;
+    //    relTol          0.01;
+    //    nSweeps         1;
+    //}
+
+    //TFinal
+    //{
+    //    solver          smoothSolver;
+    //    smoother        GaussSeidel;
+    //    tolerance       1e-8;
+    //    relTol          0;
+    //    nSweeps         1;
+    //}
+
+    // ===============================
+    // Enthalpy
+    // ===============================
+    h
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-9;
+        relTol          0.01;
+        nSweeps         1;
+    }
+
+    hFinal
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        tolerance       1e-9;
+        relTol          0;
+        nSweeps         1;
+    }
+
+    // ===============================
+    // Solid fraction (NO solver!)
+    // ===============================
+    // fs wird NICHT gelöst
+    // → Kein fs-Block notwendig!
+    pcorr
+{
+    solver          PCG;
+    preconditioner  DIC;
+    tolerance       1e-06;
+    relTol          0;
+}
+
+pcorrFinal
+{
+    $pcorr;   // Verweise einfach auf oben
+}
+
+}
+
+PIMPLE
+{
+    nCorrectors                  2;
+    nNonOrthogonalCorrectors     0;
+    nOuterCorrectors             1;
+}
+
+relaxationFactors
+{
+    fields
+    {
+        p_rgh      0.3;
+    }
+
+    equations
+    {
+        U          0.7;
+        h          1.0;
+        T          1.0;
+    }
+}
+

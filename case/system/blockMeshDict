@@ -1,0 +1,90 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+
+scale 0.001;
+
+vertices
+(
+    // Untere Ebene z = -3
+    (-15 -0.5 -3)   // 0
+    (-15  0.5 -3)   // 1
+    ( 15  0.5 -3)   // 2
+    ( 15 -0.5 -3)   // 3
+
+    // Obere Ebene z = 20
+    (-15 -0.5 20)   // 4
+    (-15  0.5 20)   // 5
+    ( 15  0.5 20)   // 6
+    ( 15 -0.5 20)   // 7
+);
+
+blocks
+(
+    hex (0 3 2 1 4 7 6 5) (100 1 100) simpleGrading (1 1 1)
+);
+
+
+boundary
+(
+    bottom
+    {
+        type wall;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+
+    top
+    {
+        type patch;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+
+    left
+    {
+        type wall;
+        faces
+        (
+            (0 1 5 4)
+        );
+    }
+
+    right
+    {
+        type wall;
+        faces
+        (
+            (3 2 6 7)
+        );
+    }
+
+    front
+    {
+        type empty;
+        faces
+        (
+            (0 3 2 1)
+        );
+    }
+
+    back
+    {
+        type empty;
+        faces
+        (
+            (4 7 6 5)
+        );
+    }
+);
+
+mergePatchPairs();
+

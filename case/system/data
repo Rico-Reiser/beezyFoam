@@ -1,0 +1,18 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      data;
+}
+
+latentHeat     3.34e5;     // J/kg – Beispiel: Wasser
+Tsolid         273.15;     // K
+Tliquid        273.15;     // K (falls isothermal freezing)
+kSolid         2.0;        // W/m/K (Beispiel)
+kLiquid        0.6;        // W/m/K (Beispiel)
+rhoSolid       920;        // kg/m3
+rhoLiquid      1000;       // kg/m3
+cpSolid        2000;       // J/kg/K
+cpLiquid       4180;       // J/kg/K

@@ -1,0 +1,62 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+
+ddtSchemes
+{
+    default     backward;
+}
+
+gradSchemes
+
+{
+    default     Gauss linear;
+    grad(p_rgh) Gauss linear;
+    grad(pcorr) Gauss linear;
+}
+
+divSchemes
+{
+    // --- Momentum
+    div(rhoPhi,U)           Gauss linearUpwind grad(U);
+    div(phi,U)              Gauss linearUpwind grad(U);
+
+
+    div(rhoPhi,h)  Gauss limitedLinear 1;
+    div(phi,h)     Gauss limitedLinear 1;
+
+
+
+
+    // --- Phase fractions (VOF)
+    div(phi,alpha)          Gauss vanLeer;
+    div(phirb,alpha)        Gauss linear;
+
+    // --- Viscous terms
+    div((nuEff*dev2(T(grad(U)))))          Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U)))))    Gauss linear;
+}
+
+laplacianSchemes
+{
+    default                 Gauss linear corrected;
+
+   // laplacian(kEff,T)       Gauss linear corrected;
+    laplacian(rAUf,p_rgh)   Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default                 linear;
+    interpolate(rho)        linear;
+    interpolate(nuEff)      linear;
+}
+
+snGradSchemes
+{
+    default                 corrected;
+}
+

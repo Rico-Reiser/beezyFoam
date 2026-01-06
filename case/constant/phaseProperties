@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      phaseProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (water contactFluid air);
+
+sigmas
+(
+    (air water) 0.07
+    (air contactFluid) 0.07
+    (water contactFluid) 0.07    
+);
+
+water
+{
+    cAlpha         0.5;     
+    residualAlpha  1e-8;
+}
+
+contactFluid
+{
+    cAlpha         0.5;
+    residualAlpha  1e-8;
+}
+
+air
+{
+    cAlpha         0.5;
+    residualAlpha  1e-8;
+}
+
+// ************************************************************************* //
